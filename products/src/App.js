@@ -2,20 +2,18 @@ import React, { Suspense } from "react";
 import "./App.css";
 const RemoteHeader = React.lazy(() => import("coreComponents/CoreHeader"));
 
-function Counter() {
-  return (
-    <div>
-      <p>Count: {0}</p>
-      <button>Increment count</button>
-    </div>
-  );
-}
-
 function App() {
+  const [count, setCount] = React.useState(0);
   return (
     <div className="App">
       <Suspense fallback={<div>Loading...</div>}>
-        <RemoteHeader loadingFrom="Product" />
+        <RemoteHeader
+          loadingFrom="Product"
+          newCount={count}
+          handleClick={() => {
+            console.log("Remote function clicked");
+          }}
+        />
       </Suspense>
       <p>
         Edit <code>src/App.js</code> and save to reload.
@@ -28,7 +26,16 @@ function App() {
       >
         FROM PRODUCT
       </a>
-      <Counter />
+      <div>
+        <p>Count: {{ count }}</p>
+        <button
+          onClick={() => {
+            setCount(count + 1);
+          }}
+        >
+          Increment count
+        </button>
+      </div>
     </div>
   );
 }

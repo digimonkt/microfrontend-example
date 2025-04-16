@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function HeaderContent({ loadingFrom }) {
+function HeaderContent({ loadingFrom, newCount, handleClick }) {
+  const [cartCount, setCartCount] = React.useState(newCount);
+  useEffect(() => {
+    setCartCount(newCount);
+  }, [newCount]);
   return (
     <header
       style={{
@@ -26,6 +30,7 @@ function HeaderContent({ loadingFrom }) {
         >
           Home
         </Link>
+        <button onClick={handleClick}> Click for remote function</button>
         <Link
           to="/products"
           style={{
@@ -37,7 +42,7 @@ function HeaderContent({ loadingFrom }) {
           Products
         </Link>
         <Link to="/cart" style={{ color: "#61dafb", textDecoration: "none" }}>
-          Cart ({0})
+          Cart ({cartCount})
         </Link>
       </nav>
     </header>
